@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Special places for Laura and I">
+    <title>Hunter & Laura's special places</title>
+
+    <!-- add an icon for site in the following href to replace fcc icon-->
+    <link
+      id="favicon"
+      rel="icon"
+      href="./images/initials-favicon-32x32.png"
+      type="image/x-icon"
+    />
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+      <h1 class="header">Hunter & Laura's Travel Map</h1>
+      <div id="map"></div>
+
+      <form id="formContainer" action="/new_location" method="POST">
+        <h2>Add a place we should go to!</h2>
+          <div class="row">
+              <div class="form-group col-sm-6">
+                <label>Location Name</label>
+                <input id="location" class="form-control" name="location" type="text" placeholder="Olive Garden" required>    
+              </div>
+              <div class="form-group col-sm-6">
+                <label>Recommended By</label>
+                <input id="location" class="form-control" name="recommendedBy" type="text" placeholder="Michael Scott" required>    
+              </div>
+         </div>
+          <div class="row">
+              <div class="form-group col-sm-6">
+                <label>Latitude</label>
+                <input id="latitude" class="form-control col-md-5" name="latitude" type="text" placeholder="38.227212057327066" required>
+                <small class="form-text text-muted smallText">Needed so google maps knows where to put the marker.</small>
+              </div>
+              <div class="form-group col-sm-6">
+                <label>Longitude</label>
+                <input id="longitude" class="form-control col-md-5" name="longitude" type="text" placeholder="-85.57832155397466" required>
+                <small class="form-text text-muted smallText">Needed so google maps knows where to put the marker.</small>
+              </div>
+          </div>
+          <div class="form-group">
+            <label id="noteLabel">Note</label>
+            <textarea id="message" name="message" class="form-control" placeholder="The place Laura wants to go to the most because of the breadsticks"></textarea>
+            <small class="form-text text-muted smallText">Don't forget to tell us who you are and why you recommend the place!</small>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+  </body>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxsHL5CQWvcBgrCSE_GXsLhHgO73RiJ0o&callback=initMap"
+  type="text/javascript"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="   
+    crossorigin="anonymous">
+  </script>
+
+  <script src="index.js"></script>
+</html>

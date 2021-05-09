@@ -1,0 +1,22 @@
+{
+  "name": "hunter-and-lauras-places",
+  "version": "1.0.0",
+  "description": "Places Laura and I have been or want to go to",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "maps",
+    "special",
+    "places"
+  ],
+  "author": "Hunter Lacefield",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^9.0.0",
+    "helmet": "^4.6.0",
+    "mongoose": "^5.12.7"
+  }
+}

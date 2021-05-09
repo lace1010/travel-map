@@ -66,7 +66,7 @@
   </script>
 
   <script src="index.js"></script>
-
+ <!-- This has to be after index.js because the code would be simply looking for initMap function before it's created on the page.-->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxsHL5CQWvcBgrCSE_GXsLhHgO73RiJ0o&callback=initMap"
   type="text/javascript"></script>
 </html>

@@ -9,7 +9,7 @@ function initMap() {
 
   // map options
   let options = {
-    zoom: 6,
+    zoom: 10,
     center: home.coords[0],
   };
   let map = new google.maps.Map(document.getElementById("map"), options);

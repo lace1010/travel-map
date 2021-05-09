@@ -48,7 +48,7 @@ const Coords = mongoose.model("Coords", coordsSchema);
 
 const locationSchema = new Schema({
   location: { type: String, required: true },
-  message: { type: String, required: true },
+  message: { type: String, default: "", required: true },
   recommendedBy: { type: String, required: true },
   coords: [coordsSchema], // Object with lat and lng
   iconImage: { type: String, required: true },

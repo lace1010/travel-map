@@ -32,9 +32,14 @@ function initMap() {
         props.location +
         "</h1> <p class='tooltipMessage'>" +
         props.message +
-        "</p> <p class='recommendedBy'> Recommended by: <span class='recommendedName'>" +
+        "</p><div class='contentChangeContainer'><p class='recommendedBy'> Recommended by: <span class='recommendedName'>" +
         props.recommendedBy +
-        "</span></p>",
+        "</span></p><p class='deleteContainer'><span id='" +
+        props._id +
+        "' class='indicator' onclick='indicator(this.id)'>Indicator</span><span onclick='showDeleteButton()' class='bin'><i class='fas fa-trash-alt'></i></span><span id='" +
+        props._id +
+        "' onclick='deleteLocation(this.id)' class='deleteButton  btn-sm btn-danger '>Delete</span></p>",
+      // Add this.id as a parameter so we know which id to find and delete with mongoose
     });
 
     marker.addListener("click", function () {
@@ -45,94 +50,74 @@ function initMap() {
 
   // Add a marker for each item in database
   $(document).ready(() => {
-    // First grap all locations from database by getting them from route "/locations"
+    // First grab all locations from database by getting them from route "/locations"
     $.getJSON("/locations", (data) => {
-      //  console.log(data[0].coords[0].lat, "<= data[0].coords[0].lat");
-      //  console.log(data[0].coords[0].lng, "<= data[0].coords[0].lng");
       data.forEach((location) => {
         addMarker(location);
       });
     });
   });
 }
-// Manually add markers/locations to map
 
-//   let arrayOfMarkers = [
-//     {
-//       coords: { lat: 38.11975265223501, lng: -85.89719806931643 },
-//       location: "Mike Linnings",
-//       message: "Dad's birthday and father's day spot.",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//     {
-//       coords: { lat: 38.22837915899796, lng: -85.73512509260753 },
-//       location: "The Post",
-//       message: "My favourite pizza spot in Louisville.",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//     {
-//       coords: { lat: 38.22911437618618, lng: -85.63937525397466 },
-//       location: "Ruth Chris",
-//       message: "The best and most expensive steak in Louisville",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//     {
-//       coords: { lat: 38.227212057327066, lng: -85.57832155397466 },
-//       location: "Olive Garden",
-//       message:
-//         "The place Laura wants to go to the most because of the breadsticks",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//     {
-//       coords: { lat: 38.24006672032459, lng: -85.69966670739245 },
-//       location: "Cherokee Park",
-//       message:
-//         "Park where she can have a scenic walk, watch dogs and play kickball",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//     {
-//       coords: { lat: 38.257939366481125, lng: -85.76385235397464 },
-//       location: "Louisville Slugger Museum",
-//       message: "Show Laura how bats are made and the biggest bat in the world.",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//     {
-//       coords: { lat: 38.12657308915887, lng: -85.8369111079493 },
-//       location: "Bobby Nichols Golf Course",
-//       message: "Take Laura golfing at your old home course.",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//     {
-//       coords: { lat: 38.122648571294654, lng: -85.87148117726576 },
-//       location: "Beth Haven Christian School",
-//       message: "Show Laura the school that you went to",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//     {
-//       coords: { lat: 38.154829067442726, lng: -85.83621614602535 },
-//       location: "Chick-fil-A",
-//       message:
-//         "Give Laura the greatest fast food experience she will ever have",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//     {
-//       coords: { lat: 38.26637630961762, lng: -85.73898190794931 },
-//       location: "Walking Bridge",
-//       message: "Take Laura to walking bridge and have a nice meal by the river",
-//       iconImage: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//       recommendedBy: "Hunter",
-//     },
-//  ];
+// This handles when form is submitted and we server side returns json string when there are invalid lat and lng.
+$(() => {
+  $("#formContainer").submit((event) => {
+    event.preventDefault();
+    $.ajax({
+      url: "/new_location",
+      type: "post",
+      data: $("#formContainer").serialize(),
+      success: (data) => {
+        // $("#jsonResult").text(JSON.stringify(data));
+        if (data == "invalid lat and lng") {
+          alert("Please enter a valid latitude and longitude variable");
+        } else if (data == "invalid lat") {
+          alert("Please enter a valid latitude variable");
+        } else if (data == "invalid lng") {
+          alert("Please enter a valid longitude variable");
+        } else window.location.reload(true);
+      },
+    });
+  });
+});
 
-//   for (let i = 0; i < arrayOfMarkers.length; i++) {
-//     addMarker(arrayOfMarkers[i]);
-//   }
+// show delte button when the bin is clicked
+let showing = false;
+const showDeleteButton = () => {
+  if (showing) {
+    $(".deleteButton").hide("medium");
+    showing = false;
+  } else {
+    $(".deleteButton").show("medium");
+    showing = true;
+  }
+};
+
+// Delete marker (on span element we added onclick=deleteLocation(this.id) to send id of element as parameter.
+// I made sure each id for the bin element was the mongodb _id of that location)
+const deleteLocation = (id) => {
+  console.log("bin is clicked");
+  $.ajax({
+    type: "DELETE",
+    url: "/deleteLocation",
+    data: { _id: id },
+    success: () => {
+      alert("The location has been deleted");
+      window.location.reload(true);
+    },
+  });
+};
+
+// Edit location marker by changing color to green if we have been there or red if we have not.
+const indicator = (id) => {
+  console.log("indicator clicked");
+  $.ajax({
+    type: "PUT",
+    url: "/editLocation",
+    data: { _id: id },
+    success: () => {
+      alert("The location has been updated");
+      window.location.reload(true);
+    },
+  });
+};

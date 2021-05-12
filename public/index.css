@@ -29,6 +29,11 @@ body {
   margin-top: 0.5rem;
 }
 
+.contentChangeContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .recommendedBy {
   font-size: 0.8rem;
   margin: 0;
@@ -36,6 +41,41 @@ body {
 
 .recommendedName {
   font-weight: 500;
+}
+
+.deleteContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.indicator {
+  padding-left: 1rem;
+  color: rgb(24, 114, 156);
+  font-weight: 300;
+  transition: all 0.3s ease;
+}
+
+.bin {
+  padding-left: 0.7rem;
+  color: rgb(217, 83, 79);
+  transition: all 0.3s ease;
+}
+
+.deleteButton {
+  display: none;
+  margin-left: 0.5rem;
+}
+
+.deleteButton:hover {
+  cursor: pointer;
+}
+
+.indicator:hover,
+.bin:hover {
+  cursor: pointer;
+  filter: brightness(80%);
+  transform: scale(1.03);
 }
 
 #formContainer {

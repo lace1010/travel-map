@@ -15,7 +15,7 @@ body {
 }
 
 #map {
-  min-height: 600px;
+  min-height: 400px;
   margin: 0 2rem 2rem 2rem;
   border: 1px solid black;
 }

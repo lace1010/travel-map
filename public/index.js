@@ -7,10 +7,19 @@ function initMap() {
     recommendedBy: "Hunter Lacefield",
   };
 
+  /* added laura's home so we can adjust where the map starts depending on where we are */
+  let laurasHome = {
+    coords: [{ lat: 53.25563249377437, lng: -3.977113484968687 }],
+    location: "Laura's home",
+    message: "He who knows all's house beside awesome beach and mountains",
+    iconImage: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+    recommendedBy: "Laura Parry",
+  }
+
   // map options
   let options = {
     zoom: 10,
-    center: home.coords[0],
+    center: laurasHome.coords[0],
   };
   let map = new google.maps.Map(document.getElementById("map"), options);
 
